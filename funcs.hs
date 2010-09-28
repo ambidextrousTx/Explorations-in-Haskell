@@ -6,7 +6,7 @@
 -- *accept upper limit
 -- *handle data types properly, don't use truncate
 
-gs :: (RealFrac a, Integral b) => [a] -> [b]
-gs (x:y:_) = [ truncate(x * (y/x) ^ n) | n <- [0,1..] ] 
+gs :: (Integral a) => [a] -> [b]
+gs (x:y:_) = [ x * (y `div` x) ^ n | n <- [0,1..] ] 
 
 
