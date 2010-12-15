@@ -9,17 +9,20 @@
 gs :: (Integral a) => [a] -> [a]
 gs (x:y:_) = [ x * (y `div` x) ^ n | n <- [0,1..] ] 
 
+-- Generates the Collatz number
 collatz2 :: (Integral i) => i -> i
 collatz2 i
     | odd i = 3*i + 1
     | otherwise = i `div` 2
     
+-- Needs the collatz2 function above
 composed :: (Num a, Integral i) => a -> i -> i
 composed n i
         | n == 1 = collatz2 i
         | otherwise = collatz2 (composed (n-1) i)
     
 -- Generates the series [collatz n, (collatz.collatz) n, ...] up to 1
+-- Needs the collatz2 and composed functions above
 q4 :: (Integral i) => i -> [i]
 q4 i
     | i > 0 = takeWhile (>1) [composed n i | n <- [1,2..]]
@@ -31,7 +34,7 @@ q2 xs =
     let n = length xs
     in [splitAt m xs | m <- [0..n]]
 
--- Converts decimal to binary
+-- Converts decimal to binary, in least-significant-bit first format
 convert2Bin :: Int -> [Int]
 convert2Bin n
     | n == 1 = [1]
